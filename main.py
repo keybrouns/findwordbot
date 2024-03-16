@@ -1,10 +1,7 @@
-from keep_alive import keep_alive
 from aiogram import types, Dispatcher, executor, Bot
 from words import words
 import random
 import os
-
-keep_alive()
 
 supbot = Bot(token=os.environ.get('SUPTOKEN'))
 bot = Bot(token=os.environ.get('TOKEN'))
