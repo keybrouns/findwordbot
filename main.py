@@ -3,7 +3,6 @@ from words import words
 import random
 import os
 
-supbot = Bot(token=os.environ.get('SUPTOKEN'))
 bot = Bot(token=os.environ.get('TOKEN'))
 dp = Dispatcher(bot)
 
@@ -34,7 +33,7 @@ async def cmd_start(message: types.Message):
     await message.answer("👋 Welcome! To play send me a command /play")
     # await message.answer("for more info /help")
 
-    await supbot.send_message(chat_id=os.environ.get('SUPID'), text=f"#joined 👤\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}")
+    await bot.send_message(chat_id=os.environ.get('SUPID'), text=f"#joined 👤\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}")
 
 @dp.message_handler(commands=['help'])
 async def cmd_help(message: types.Message):
@@ -50,7 +49,7 @@ async def cmd_giveup(message: types.Message):
         # print(users_sessions[message.from_user.id]['isplaying'])
         if users_sessions[message.from_user.id]['isplaying']:
             await bot.send_message(chat_id=message.chat.id, text=f"😬 The word was <b>{users_sessions[message.from_user.id]['word']},</b> enter /play to play again.", parse_mode='html')
-            await supbot.send_message(chat_id=os.environ.get('SUPID'), text=f"#gaveup :(\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
+            await bot.send_message(chat_id=os.environ.get('SUPID'), text=f"#gaveup :(\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
             users_sessions[message.from_user.id]['isplaying'] = False
             users_sessions[message.from_user.id]['word'] = None
             users_sessions[message.from_user.id]['word_letters'] = None
@@ -76,7 +75,7 @@ async def cmd_play(message: types.Message):
             users_sessions[message.from_user.id]['word_letters'] = set(users_sessions[message.from_user.id]['word'])
             users_sessions[message.from_user.id]['user_letters'] = ''
 
-            await supbot.send_message(chat_id=os.environ.get('SUPID'), text=f"#playing 🎮\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
+            await bot.send_message(chat_id=os.environ.get('SUPID'), text=f"#playing 🎮\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
 
             # print(word)
             await message.answer("🚀 Let's start!\nYou can send /giveup command to give up")
