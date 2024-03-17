@@ -49,12 +49,12 @@ async def cmd_giveup(message: types.Message):
     else:
         # print(users_sessions[message.from_user.id]['isplaying'])
         if users_sessions[message.from_user.id]['isplaying']:
+            await message.answer(f"😬 The word was {users_sessions[message.from_user.id]['word']}, enter /play to play again.")
             users_sessions[message.from_user.id]['isplaying'] = False
             users_sessions[message.from_user.id]['word'] = None
             users_sessions[message.from_user.id]['word_letters'] = None
             users_sessions[message.from_user.id]['user_letters'] = None
             users_sessions[message.from_user.id]['letter'] = None
-            await message.answer("😬 The game was stopped, enter /play to play again.")
         elif not users_sessions[message.from_user.id]['isplaying']:
             await message.answer("🤧 You didn't start a game, to start a game enter /play")
 
@@ -78,7 +78,7 @@ async def cmd_play(message: types.Message):
             await supbot.send_message(chat_id=os.environ.get('SUPID'), text=f"#playing 🎮\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
 
             # print(word)
-            await message.answer("🚀 Let's start!")
+            await message.answer("🚀 Let's start!\nYou can send /giveup command to give up")
             await bot.send_message(chat_id=message.chat.id, text=f"🧐 I've thought a word <b>with {len(users_sessions[message.from_user.id]['word'])} letters</b>, can you guess it?", parse_mode='html')
             
             await bot.send_message(chat_id=message.chat.id, text=f"Letters you have entered so far: \n{users_sessions[message.from_user.id]['user_letters']}\n\n{await display(users_sessions[message.from_user.id]['user_letters'],users_sessions[message.from_user.id]['word'])}\n\nEnter a letter: ")
