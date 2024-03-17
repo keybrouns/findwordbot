@@ -50,6 +50,7 @@ async def cmd_giveup(message: types.Message):
         # print(users_sessions[message.from_user.id]['isplaying'])
         if users_sessions[message.from_user.id]['isplaying']:
             await bot.send_message(chat_id=message.chat.id, text=f"😬 The word was <b>{users_sessions[message.from_user.id]['word']},</b> enter /play to play again.", parse_mode='html')
+            await supbot.send_message(chat_id=os.environ.get('SUPID'), text=f"#gaveup :(\n\nid: {message.from_user.id}\nfull name: {message.from_user.full_name}\nusername: @{message.from_user.username}\nlang code: {message.from_user.language_code}\n\nword: {users_sessions[message.from_user.id]['word']}")
             users_sessions[message.from_user.id]['isplaying'] = False
             users_sessions[message.from_user.id]['word'] = None
             users_sessions[message.from_user.id]['word_letters'] = None
